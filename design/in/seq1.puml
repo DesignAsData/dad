@@ -1,0 +1,61 @@
+@startuml
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+actor User
+participant System
+database Database
+
+
+alt #LightGreen Successful Login
+    User -> System: Submit valid credentials
+    note right User : i am a left note
+    note left System: i am a right note
+    System -> User: Grant Access (Token)
+else #LightPink Invalid Credentials
+    User -> System: Submit wrong password
+    System -> User: Show "Access Denied" error
+end
+
+
+opt #LightCyan User requested Newsletter
+    System -> Database: Flag user as subscriber
+    System --> User: Subscription confirmed
+end
+
+
+
+loop #LightYellow 3 times (Retry Attempt)
+    System -> Database: Attempt connection
+    Database --> System: Connection Timeout
+end
+
+
+
+par #GhostWhite Process Payment
+    System -> System: Charge Credit Card
+else Send Notifications
+    System -> User: Send confirmation email
+    System -> Database: Log transaction receipt
+end
+
+
+break #Tomato User cancels transaction
+    User -> System: Click "Cancel"
+    System -> Database: Rollback changes
+    System -> User: Return to Home Screen
+end
+
+
+
+critical #Lavender Modifying Account Balance
+    System -> Database: Read Balance
+    System -> Database: Update Balance
+end
+
+
+group #MistyRose Custom Step: Audit Logging
+    System -> Database: Write system audit trail
+end
+
+@enduml

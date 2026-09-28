@@ -1,0 +1,19 @@
+@startuml
+User -> System : Submit valid credentials
+System -> User : Grant Access (Token)
+User -> System : Submit wrong password
+System -> User : Show "Access Denied" error
+System -> Database : Flag user as subscriber
+System --> User : Subscription confirmed
+System -> Database : Attempt connection
+Database --> System : Connection Timeout
+System -> System : Charge Credit Card
+System -> User : Send confirmation email
+System -> Database : Log transaction receipt
+User -> System : Click "Cancel"
+System -> Database : Rollback changes
+System -> User : Return to Home Screen
+System -> Database : Read Balance
+System -> Database : Update Balance
+System -> Database : Write system audit trail
+@enduml
