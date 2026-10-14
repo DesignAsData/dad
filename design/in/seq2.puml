@@ -1,0 +1,14 @@
+@startuml
+
+box "Outer System" #LightGray
+    box "Inner Service A" #Red
+        participant Alice
+    endbox
+    box "Inner Service B" #LightGreen
+        participant Bob
+    endbox
+end box
+
+Alice -> Bob : Hello
+Bob --> Alice : Hi!
+@enduml
